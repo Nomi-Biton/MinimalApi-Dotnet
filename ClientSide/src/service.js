@@ -1,26 +1,57 @@
 import axios from 'axios';
+//ניתוב ברירת מחדל
+axios.defaults.baseURL = 'http://localhost:5054';
 
-const apiUrl = "https://localhost:7271"
-
+//תפיסת שגיאות והדפסןת בלוג
+axios.interceptors.response.use( (response)=> {
+  //חוזר אם זה תקין
+   console.log("OK");
+   return response;
+},
+  (error)=> {
+  //אם זה לא תקין מחזיר את השגיאה
+  console.log("the error:"+error);
+  
+  return Promise.reject(error);
+});
 export default {
+  //הצגת המשימות
   getTasks: async () => {
-    const result = await axios.get(`${apiUrl}/items`)    
+    console.log("i am in the get")
+    console.log(`/getAll`);
+    
+    const result = await axios.get(`/getAll`)
+    
+    console.log(result.data);
+    
     return result.data;
   },
-
-  addTask: async(name)=>{
+// הוספת משימה 
+  addTask: async (name) => {
     console.log('addTask', name)
-    //TODO
+    console.log(`/add/${name}`)
+    const result = await axios.post(`/add/${name}`)
+    console.log("after log")
+    // return result.data;
+    return{};
+  },
+//עדכון משימה
+  setCompleted: async (id, isComplete) => {
+    console.log('setCompleted', { id, isComplete })
+    console.log(`/update/${id}/${isComplete}`);
+    
+    const result = await axios.put(`/update/${id}/${isComplete}`)
+console.log("after");
+
     return {};
   },
-
-  setCompleted: async(id, isComplete)=>{
-    console.log('setCompleted', {id, isComplete})
-    //TODO
-    return {};
-  },
-
-  deleteTask:async()=>{
+//מחיקת משימה מהמערכת
+  deleteTask: async (id) => {
     console.log('deleteTask')
+    console.log(`/del/${id}`);
+    
+    const result = await axios.delete(`/del/${id}`)
+
   }
+  
 };
