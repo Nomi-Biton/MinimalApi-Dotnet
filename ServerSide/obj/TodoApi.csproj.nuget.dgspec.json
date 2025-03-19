@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\נעמי\\Desktop\\נעמי מחשבים תשפה\\פרקטיקוד\\פרקטיקוד 3\\practicode 3\\minimal-api-dotnet\\MinimalApi-Dotnet\\ServerSide\\TodoApi.csproj": {}
+    "C:\\Users\\a0547\\OneDrive\\שולחן העבודה\\תכנות תשפה\\פרקטיקוד\\Practicode3\\MinimalApi\\MinimalApiServer\\Server\\TodoApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\נעמי\\Desktop\\נעמי מחשבים תשפה\\פרקטיקוד\\פרקטיקוד 3\\practicode 3\\minimal-api-dotnet\\MinimalApi-Dotnet\\ServerSide\\TodoApi.csproj": {
+    "C:\\Users\\a0547\\OneDrive\\שולחן העבודה\\תכנות תשפה\\פרקטיקוד\\Practicode3\\MinimalApi\\MinimalApiServer\\Server\\TodoApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\נעמי\\Desktop\\נעמי מחשבים תשפה\\פרקטיקוד\\פרקטיקוד 3\\practicode 3\\minimal-api-dotnet\\MinimalApi-Dotnet\\ServerSide\\TodoApi.csproj",
+        "projectUniqueName": "C:\\Users\\a0547\\OneDrive\\שולחן העבודה\\תכנות תשפה\\פרקטיקוד\\Practicode3\\MinimalApi\\MinimalApiServer\\Server\\TodoApi.csproj",
         "projectName": "TodoApi",
-        "projectPath": "C:\\Users\\נעמי\\Desktop\\נעמי מחשבים תשפה\\פרקטיקוד\\פרקטיקוד 3\\practicode 3\\minimal-api-dotnet\\MinimalApi-Dotnet\\ServerSide\\TodoApi.csproj",
-        "packagesPath": "C:\\Users\\נעמי\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\נעמי\\Desktop\\נעמי מחשבים תשפה\\פרקטיקוד\\פרקטיקוד 3\\practicode 3\\minimal-api-dotnet\\MinimalApi-Dotnet\\ServerSide\\obj\\",
+        "projectPath": "C:\\Users\\a0547\\OneDrive\\שולחן העבודה\\תכנות תשפה\\פרקטיקוד\\Practicode3\\MinimalApi\\MinimalApiServer\\Server\\TodoApi.csproj",
+        "packagesPath": "C:\\Users\\a0547\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\a0547\\OneDrive\\שולחן העבודה\\תכנות תשפה\\פרקטיקוד\\Practicode3\\MinimalApi\\MinimalApiServer\\Server\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\נעמי\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\a0547\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -39,7 +43,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -50,6 +55,8 @@
               "version": "[8.0.2, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.2, )"
             },
@@ -58,8 +65,14 @@
               "version": "[8.0.2, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.2, )"
+            },
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.21.0, )"
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
@@ -89,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

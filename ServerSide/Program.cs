@@ -1,108 +1,67 @@
-using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.Options;
+using System.Linq.Expressions;
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.Extensions.DependencyModel;
-using MySqlConnector;
 using TodoApi;
+using System.Collections;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.AspNetCore.Components.Web.HtmlRendering;
+using Microsoft.Extensions.ObjectPool;
+int i = 1;//משתנה גלובלי שמגדיר את האיידי של המשימות
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
 
-    //בניית שירות ה api
-    var builder = WebApplication.CreateBuilder(args);
-    //הוספת  Services
-    builder.Services.AddControllers();
-    
-    //swagger
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
-    //connectionString
-    var connectionString="Server=localhost;user=root;password=NomiBiton1!;database=new_schema";
-    // שנטען מהm ysql    DbContext  הוספה לשירות עצם מסוג 
-    builder.Services.AddDbContext<ToDoDbContext>(option=>option.UseMySql(
-        connectionString,ServerVersion.AutoDetect(connectionString)
-    ));
-    //cors
-    builder.Services.AddCors(opt=>{
-        opt.AddDefaultPolicy(PolicyBuilder=>
-        {
-            //מדיניות הרשאות 
-            PolicyBuilder.WithOrigins("http://localhost:3000")
-                .AllowAnyHeader() 
-                .AllowAnyMethod();
-                   
-                   
-        });
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<ToDoDbContext>(option =>
+    option.UseMySql(builder.Configuration.GetConnectionString("ToDoDb"),
+    ServerVersion.Parse("8.0.41-myfirst"))
+);//הוספת התקשרות עם המסד נתונים
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") 
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
-    
+});//הוספת התקשרות עם צד שרת
+var app = builder.Build();
 
-    
-   //הבניה והשימוש ממש
-    var app = builder.Build();
-     app.UseCors();
-     app.UseSwagger();
-     app.UseSwaggerUI();
+app.UseCors();
+app.UseSwagger();
+app.UseSwaggerUI();
+app.MapGet("/", async (ToDoDbContext x) =>
+   await x.Items.ToListAsync()
+);//הצגת כל המשימות
+ app.MapPost("/{e}", async (string e,ToDoDbContext x) =>{
 
-    app.MapGet("/", () => "m");
-    // הצגת כל המשימות
-    app.MapGet("/getAll",([FromServices] ToDoDbContext t)=>t.Items);
-    //הוספת משימה
-    app.MapPost("/add/{name}", (string name,[FromServices]ToDoDbContext t)=>{
-    var it = new Item
-    {
-        Name = name,
-        IsComplete = false
-    };
-       
-    t.Items.AddAsync(it);
-    t.SaveChanges();
+    Item r=new Item();
+  r.Name =e;
+    r.IsComplete=false;
+    r.Id=i++;
+   x.Items.Add(r);
+    await x.SaveChangesAsync();
+ 
+} );//הוספת משימה חדשה
+app.MapPut("/{id}/{t}",async (int id,bool t,ToDoDbContext x) => 
+  {
+            
 
-       
-    return ;
-        
-    });
-    //עדכון משימה
-    app.MapPut("/update/{id}/{isC}",(int id,bool isC ,[FromServices]ToDoDbContext t)=>{
-          
-    foreach (var ii in t.Items)
-    {
-        if(ii.Id==id){
-            ii.IsComplete=isC;
-        }
-    }
-    t.SaveChanges();      
-        
-    
-    });
-    //מחיקת משימה מהמערכת
-    app.MapDelete("/del/{id}",([FromServices]ToDoDbContext t,int id)=>
-    {
-        bool flag=false;
+    var itemToUpdate=  await x.Items.FindAsync(id);
+    itemToUpdate.IsComplete=t;
+     await x.SaveChangesAsync();
 
-    foreach (var ii in t.Items)
-    {
-        if(ii.Id==id)
-    {
-            flag=true;
+  });//עדכון משימה
 
-    t.Items.Remove(ii);
-    
-    }
-    } 
-    if(flag==true){ 
-        t.SaveChanges();
-        return Results.Ok(t.Items);
-        }
-    else
-    {
-        return Results.NotFound();} 
+ 
+  app.MapDelete("/{id}",async (int id,ToDoDbContext s) => 
+   {
+      var itemToDelete=await s.Items.FindAsync(id);
+      s.Remove(itemToDelete);
+           await s.SaveChangesAsync();
 
-        
-    }
+   });//מחיקת משימה
+  
 
 
-    );
-
-// הרצה
 app.Run();
-   
