@@ -19,7 +19,7 @@ public partial class ToDoDbContext : DbContext
     public virtual DbSet<Item> Items { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        =>   optionsBuilder.UseMySql("Server=localhost;user=root;password=Bidouille1!;database=myfirst",
+        =>   optionsBuilder.UseMySql("Server=localhost;user=root;password=NomiBiton1!;database=new_schema",
         Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.41-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
