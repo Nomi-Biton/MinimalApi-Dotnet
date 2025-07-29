@@ -1,6 +1,6 @@
 import axios from 'axios';
 //ניתוב ברירת מחדל
-axios.defaults.baseURL = 'http://localhost:5054';
+axios.defaults.baseURL = 'http://localhost:5283';
 
 //תפיסת שגיאות והדפסןת בלוג
 axios.interceptors.response.use( (response)=> {
@@ -20,7 +20,7 @@ export default {
     console.log("i am in the get")
     console.log(`/getAll`);
     
-    const result = await axios.get(`/getAll`)
+    const result = await axios.get(`/`)
     
     console.log(result.data);
     
@@ -30,7 +30,7 @@ export default {
   addTask: async (name) => {
     console.log('addTask', name)
     console.log(`/add/${name}`)
-    const result = await axios.post(`/add/${name}`)
+    const result = await axios.post(`/${name}`)
     console.log("after log")
     // return result.data;
     return{};
@@ -40,7 +40,7 @@ export default {
     console.log('setCompleted', { id, isComplete })
     console.log(`/update/${id}/${isComplete}`);
     
-    const result = await axios.put(`/update/${id}/${isComplete}`)
+    const result = await axios.put(`/${id}/${isComplete}`)
 console.log("after");
 
     return {};
@@ -50,7 +50,7 @@ console.log("after");
     console.log('deleteTask')
     console.log(`/del/${id}`);
     
-    const result = await axios.delete(`/del/${id}`)
+    const result = await axios.delete(`/${id}`)
 
   }
   
